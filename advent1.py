@@ -27,21 +27,22 @@ day_motes = {
 @click.option('--day', default=datetime.today().day, help='The December day to show advent for.')
 
 def run_advent(day):
-    mote.clear()
     click.echo('Running advent for December {}.'.format(day))
-    for iday in range(1, day+1):
-    	if (iday in day_motes):
-    		mote_list = day_motes[iday]
-    		click.echo('{} : {}'.format(iday, mote_list))
-    		for imote in range(1, len(mote_list)):
-    			strip = mote_list[0]
-    			click.echo('calling mote.setpixel({},{},red,green,blue)'.format(strip, mote_list[imote]))
-    			mote.set_pixel(strip, mote_list[imote] - 1, 100, 100, 100)
-    	else:
-    		click.echo('{} : motes not yet defined.'.format(iday))
-        mote.show()
-    	time.sleep(0.5)
-
+    while True:
+        mote.clear()
+        for iday in range(1, day+1):
+            if (iday in day_motes):
+                mote_list = day_motes[iday]
+                click.echo('{} : {}'.format(iday, mote_list))
+                for imote in range(1, len(mote_list)):
+                    strip = mote_list[0]
+                    click.echo('calling mote.setpixel({},{},red,green,blue)'.format(strip, mote_list[imote]))
+                    mote.set_pixel(strip, mote_list[imote] - 1, 100, 100, 100)
+            else:
+                click.echo('{} : motes not yet defined.'.format(iday))
+            mote.show()
+            time.sleep(0.5)
+        time.sleep(5)
 
 
 if __name__ == '__main__':
