@@ -38,10 +38,10 @@ def run_advent(day):
                     strip = mote_list[0]
                     click.echo('calling mote.setpixel({},{},red,green,blue)'.format(strip, mote_list[imote]))
                     mote.set_pixel(strip, mote_list[imote] - 1, 100, 100, 100)
+                    time.sleep(0.5)
             else:
                 click.echo('{} : motes not yet defined.'.format(iday))
             mote.show()
-            time.sleep(0.5)
         time.sleep(5)
 
 
