@@ -2,7 +2,7 @@ import click
 from datetime import datetime
 from mote import Mote
 import time
-
+from subprocess import call
 
 mote = Mote()
 mote.configure_channel(1, 16, False)
@@ -27,6 +27,8 @@ day_motes = {
 @click.option('--day', default=datetime.today().day, help='The December day to show advent for.')
 
 def run_advent(day):
+    if (day > 25):
+        day = 25
     click.echo('Running advent for December {}.'.format(day))
     while True:
         mote.clear()
@@ -42,6 +44,8 @@ def run_advent(day):
             else:
                 click.echo('{} : motes not yet defined.'.format(iday))
             mote.show()
+            if (iday == 25):
+		call(['sudo', 'piglow_seq'])
         time.sleep(5)
 
 
