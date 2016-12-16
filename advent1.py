@@ -27,8 +27,11 @@ day_motes = {
 
 @click.command()
 @click.option('--day', default=datetime.today().day, help='The December day to show advent for.')
+@click.option('--red', default=100, help='Mote redness (0-255)')
+@click.option('--green', default=100, help='Mote greeness (0-255)')
+@click.option('--blue', default=100, help='Mote blueness (0-255_')
 
-def run_advent(day):
+def run_advent(day, red, green, blue):
     if (day > 25):
         day = 25
     click.echo('Running advent for December {}.'.format(day))
@@ -40,8 +43,8 @@ def run_advent(day):
                 click.echo('{} : {}'.format(iday, mote_list))
                 for imote in range(1, len(mote_list)):
                     strip = mote_list[0]
-                    click.echo('calling mote.setpixel({},{},red,green,blue)'.format(strip, mote_list[imote]))
-                    mote.set_pixel(strip, mote_list[imote] - 1, 100, 100, 100)
+                    click.echo('calling mote.setpixel({},{},{},{},{})'.format(strip, mote_list[imote], red, green, blue))
+                    mote.set_pixel(strip, mote_list[imote] - 1, red, green, blue)
                     time.sleep(0.5)
             else:
                 click.echo('{} : motes not yet defined.'.format(iday))
@@ -53,6 +56,7 @@ def run_advent(day):
 # Signal handlers
 def sigint_handler(signum, frame):
     mote.clear()
+    mote.show()
     call(['sudo', 'piglow', 'all', 'off'])
     sys.exit(0)
 
