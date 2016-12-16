@@ -2,6 +2,7 @@ import click
 from datetime import datetime
 from mote import Mote
 import time
+import signal
 from subprocess import call
 
 mote = Mote()
@@ -48,6 +49,13 @@ def run_advent(day):
 		call(['sudo', 'piglow_seq'])
         time.sleep(5)
 
+# Signal handlers
+def sigint_handler(signum, frame):
+    mote.clear()
+    call(['sudo', 'piglow all off'])
+
+# Register signal handlers
+signal.signal(signal.SIGINT, sigint_handler)
 
 if __name__ == '__main__':
     run_advent()
