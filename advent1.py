@@ -3,6 +3,7 @@ from datetime import datetime
 from mote import Mote
 import time
 import signal
+import sys
 from subprocess import call
 
 mote = Mote()
@@ -52,7 +53,8 @@ def run_advent(day):
 # Signal handlers
 def sigint_handler(signum, frame):
     mote.clear()
-    call(['sudo', 'piglow all off'])
+    call(['sudo', 'piglow', 'all', 'off'])
+    sys.exit(0)
 
 # Register signal handlers
 signal.signal(signal.SIGINT, sigint_handler)
